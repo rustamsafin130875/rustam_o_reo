@@ -1,0 +1,72 @@
+{% load static %}
+
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | Oreo</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet">
+    <link href="{% static 'css/price-range.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+	<link href="{% static 'css/main.css' %}" rel="stylesheet">
+	<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/html5shiv.js' %}"></script>
+    <script src="{% static 'js/respond.min.js' %}"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+<body>
+    <section class="vlad_header">
+		<div class="div_container_header">
+			<div class="div_logo">
+				<div class="companyinfo">
+					<h2><span>O</span>-reo</h2>
+					<p>Все права зарегистрированы, услуги лицензированы</p>
+				</div>
+			</div>
+			<div class="div_search">
+				<div class="search_box pull-right">
+					<form method="POST">
+						{% csrf_token %}
+						<input type="text" placeholder="Search" name="search_bar" />
+					</form>
+				</div>
+			</div>
+			<div class="div_buttons">
+				<div class="shop-menu pull-right">
+					<ul class="nav navbar-nav">
+						{% if user.is_authenticated %}
+							<li><a href="/">Home</a></li>
+							<li><a href="/category">Category</a></li>
+							<li><a href="/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+							<li><a href="/accounts/logout/"><i class="fa fa-lock"></i> Logout</a></li>
+						{% else %}
+							<li><a href="/accounts/login/"><i class="fa fa-lock"></i> Login</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+    {% for i in cart %}
+    <h1>{{ i.user_product }}</h1>
+    <h1>{{ i.user_product.product_price }}</h1>
+    <h1>{{ i.user_product_amount }}</h1>
+    <a href="/del_item/{{ i.user_product.id }}"><i></i></a>
+    {% endfor %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <button>Оформить заказ</button>
+    </form>
+</body>
+</html>
